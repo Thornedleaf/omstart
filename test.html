@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Omstart Out of the Void</title>
     <link rel="stylesheet" href="index.css">
-    <script src="index.js" defer></script>
+    <script src="test.js" defer></script>
 </head>
 <body>
     <header>
@@ -18,8 +18,20 @@
     </header>
         <p>Testsidan funkar.</p>
     <div class="test-container">    
-        <button id="startTestBtn">Start Test</button>
-        <div id="imageContainer"></div>
+        <button id="startTestBtn" class="nav-btn">Start Test</button>
+        <div class="image-row">
+            <div id="imageContainer"></div>
+            <div id="numberPanel" class="hidden">
+                <button class="numberBtn nav-btn" id="randomBtn1"></button>
+                <button class="numberBtn nav-btn" id="indexBtn"></button>
+                <button class="numberBtn nav-btn" id="randomBtn2"></button>
+                
+            </div>
+        </div>
+        <div class="nav-buttons">
+            <button id="lastBtn" class="nav-btn hidden">Back</button>
+            <button id="nextBtn" class="nav-btn hidden">Next</Sbutton>
+        </div>
     </div>
     
     <footer>
