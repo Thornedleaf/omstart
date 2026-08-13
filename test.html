@@ -17,20 +17,24 @@
         </nav>
     </header>
         <p>Testsidan funkar.</p>
+    <div id="counterBadge" class="hidden">0</div>
     <div class="test-container">    
         <button id="startTestBtn" class="nav-btn">Start Test</button>
         <div class="image-row">
             <div id="imageContainer"></div>
             <div id="numberPanel" class="hidden">
-                <button class="numberBtn nav-btn" id="randomBtn1"></button>
-                <button class="numberBtn nav-btn" id="indexBtn"></button>
-                <button class="numberBtn nav-btn" id="randomBtn2"></button>
-                
+                <div class="panel-row">
+                    <button class="numberBtn nav-btn" id="randomBtn1"></button>
+                    <button class="numberBtn nav-btn" id="indexBtn"></button>
+                    <button class="numberBtn nav-btn" id="randomBtn2"></button>
+                </div>
+                <div class="panel-next">
+                    <button id="nextBtn" class="nav-btn hidden">Next</button>
+                </div>
             </div>
         </div>
         <div class="nav-buttons">
             <button id="lastBtn" class="nav-btn hidden">Back</button>
-            <button id="nextBtn" class="nav-btn hidden">Next</Sbutton>
         </div>
     </div>
     

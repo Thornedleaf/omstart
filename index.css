@@ -123,19 +123,48 @@ button.nav-btn,
     gap: 20px;
     flex-wrap: nowrap;
     width: 100%;
-    padding-left: 160px;
+    padding-left: 120px;
     box-sizing: border-box;
 }
 
 #numberPanel {
-    width: 160px;
-    min-width: 160px;
+    width: 220px;
+    min-width: 220px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    justify-content: flex-start;
+    justify-content: center;
     margin: 0;
     align-items: center;
+}
+
+.panel-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.panel-next {
+    margin-top: 8px;
+}
+
+#counterBadge {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    background: #333;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 12px;
+    font-weight: bold;
+    min-width: 28px;
+    text-align: center;
+    z-index: 1000;
+}
+
+.hidden {
+    display: none;
 }
 
 .numberBtn {
@@ -148,6 +177,24 @@ button.nav-btn,
     border: 1px solid #ced4da;
     border-radius: 8px;
     cursor: default;
+}
+
+.numberBtn.selected {
+    background-color: #007bff;
+    color: #ffffff;
+    border-color: #0056b3;
+}
+
+.numberBtn.selected-green {
+    background-color: #28a745; /* green */
+    color: #ffffff;
+    border-color: #1e7e34;
+}
+
+.numberBtn.selected-red {
+    background-color: #dc3545; /* red */
+    color: #ffffff;
+    border-color: #b21f2d;
 }
 
 #nextBtn {
