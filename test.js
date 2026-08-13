@@ -24,6 +24,10 @@ const randomBtn1 = document.getElementById('randomBtn1');
 const randomBtn2 = document.getElementById('randomBtn2');
 const indexBtn = document.getElementById('indexBtn');
 const counterBadge = document.getElementById('counterBadge');
+const completionModal = document.getElementById('completionModal');
+const modalMessage = document.getElementById('modalMessage');
+const modalCloseBtn = document.getElementById('modalCloseBtn');
+const modalOverlay = document.getElementById('modalOverlay');
 
 let shuffledImages = [];
 let currentImageIndex = 0;
@@ -69,13 +73,59 @@ function updateNumberPanel(index) {
     numberPanel.classList.remove('hidden');
 }
 
+function showCompletionModal(message) {
+    if (modalMessage) modalMessage.innerHTML = message;
+    if (completionModal) completionModal.classList.remove('hidden');
+    // hide main UI areas
+    const imageRowEl = document.querySelector('.image-row');
+    const navButtonsEl = document.querySelector('.nav-buttons');
+    if (imageRowEl) imageRowEl.classList.add('hidden');
+    if (navButtonsEl) navButtonsEl.classList.add('hidden');
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (lastBtn) lastBtn.classList.add('hidden');
+    if (numberPanel) numberPanel.classList.add('hidden');
+    if (startTestBtn) startTestBtn.classList.remove('hidden');
+}
+
+function hideCompletionModal() {
+    if (completionModal) completionModal.classList.add('hidden');
+}
+
 function showImageAt(index) {
     const image = shuffledImages[index];
     if (!image) {
-        imageContainer.innerHTML = '<p>Test completed. Try again to shuffle a new order.</p>';
         nextBtn.classList.add('hidden');
         lastBtn.classList.add('hidden');
         if (numberPanel) numberPanel.classList.add('hidden');
+
+        // hide the image row and nav buttons so page shows only Start and the message
+        const imageRowEl = document.querySelector('.image-row');
+        const navButtonsEl = document.querySelector('.nav-buttons');
+        if (imageRowEl) imageRowEl.classList.add('hidden');
+        if (navButtonsEl) navButtonsEl.classList.add('hidden');
+
+        const total = shuffledImages.length || 0;
+        let message = '';
+        if (total === 0) {
+            message = '<p>No images available. Click Start Test to load images.</p>';
+        } else {
+            if (typeof topRightCounter === 'number' && topRightCounter < total) {
+                message = `<p>Congratulations — you reached the end of the test.</p><p>Your counter (${topRightCounter}) is less than the total number of images (${total}). Please <a href="contact.html">contact us</a> for a bigger test.</p>`;
+            } else {
+                message = `<p>Congratulations — you completed the test!</p><p>Your counter: ${topRightCounter} / ${total}</p>`;
+            }
+        }
+
+        // show the completion message in the modal and persist state
+        showCompletionModal(message);
+        try {
+            sessionStorage.setItem('testCompleted', '1');
+            sessionStorage.setItem('lastTopRightCounter', String(topRightCounter));
+            sessionStorage.setItem('lastTotal', String(total));
+        } catch (e) {
+            // ignore storage errors
+        }
+        if (startTestBtn) startTestBtn.classList.remove('hidden');
         return;
     }
 
@@ -101,6 +151,19 @@ async function startTest() {
         counterBadge.textContent = '0';
         counterBadge.classList.add('hidden');
     }
+
+    // clear any persisted completion state
+    try {
+        sessionStorage.removeItem('testCompleted');
+        sessionStorage.removeItem('lastTopRightCounter');
+        sessionStorage.removeItem('lastTotal');
+    } catch (e) {}
+
+    // ensure UI areas are visible again when starting
+    const imageRowEl = document.querySelector('.image-row');
+    const navButtonsEl = document.querySelector('.nav-buttons');
+    if (imageRowEl) imageRowEl.classList.remove('hidden');
+    if (navButtonsEl) navButtonsEl.classList.remove('hidden');
 
     imageContainer.innerHTML = '<p>Checking images…</p>';
     const verified = await verifyImageFiles(imageFiles);
@@ -162,6 +225,30 @@ if (startTestBtn && imageContainer && nextBtn && lastBtn) {
             sessionStorage.removeItem('currentImageIndex');
         }
     }
+
+    // If the user previously completed the test, restore the completion message
+    try {
+        if (sessionStorage.getItem('testCompleted') === '1') {
+            const savedCounter = Number(sessionStorage.getItem('lastTopRightCounter')) || 0;
+            const savedTotal = Number(sessionStorage.getItem('lastTotal')) || (shuffledImages.length || 0);
+            topRightCounter = savedCounter;
+            let message = '';
+            if (savedTotal === 0) {
+                message = '<p>No images available. Click Start Test to load images.</p>';
+            } else {
+                if (savedCounter < savedTotal) {
+                    message = `<p>Congratulations — you reached the end of the test.</p><p>Your counter (${savedCounter}) is less than the total number of images (${savedTotal}). Please <a href="contact.html">contact us</a> for a bigger test.</p>`;
+                } else {
+                    message = `<p>Congratulations — you completed the test!</p><p>Your counter: ${savedCounter} / ${savedTotal}</p>`;
+                }
+            }
+            showCompletionModal(message);
+        }
+    } catch (e) {}
+
+    // attach modal close handlers (do not clear persisted completion unless Start is pressed)
+    if (modalCloseBtn) modalCloseBtn.addEventListener('click', () => hideCompletionModal());
+    if (modalOverlay) modalOverlay.addEventListener('click', () => hideCompletionModal());
 }
 
 // Panel button selection behavior: single-select with toggle
