@@ -15,15 +15,22 @@ let imageFiles = [
 ].map((src, i) => ({ src, index: i, number: extractNumberFromFilename(src) }));
 
 async function loadImageFiles() {
+    // try server scan first (if local server running), then images.json, then embedded
+    try {
+        const srv = await fetch('http://localhost:3000/scan-images', { cache: 'no-store' });
+        if (srv.ok) {
+            const arr = await srv.json();
+            if (Array.isArray(arr) && arr.length > 0) return arr.map((src, i) => ({ src, index: i, number: extractNumberFromFilename(src) }));
+        }
+    } catch (e) {}
     try {
         const res = await fetch('images.json', { cache: 'no-store' });
-        if (!res.ok) throw new Error('no json');
-        const arr = await res.json();
-        if (!Array.isArray(arr)) throw new Error('invalid');
-        return arr.map((src, i) => ({ src, index: i, number: extractNumberFromFilename(src) }));
-    } catch (e) {
-        return imageFiles; // fallback
-    }
+        if (res.ok) {
+            const arr = await res.json();
+            if (Array.isArray(arr) && arr.length > 0) return arr.map((src, i) => ({ src, index: i, number: extractNumberFromFilename(src) }));
+        }
+    } catch (e) {}
+    return imageFiles; // fallback
 }
 
 
