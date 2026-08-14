@@ -83,29 +83,41 @@ button.nav-btn,
     padding: 10px 16px;
     background-color: #333;
     color: white;
-    border-radius: 6px;
+    /* border-radius: 6px; */
 }
 
 .numberBtn {
-    min-width: 64px;
-    min-height: 64px;
+    width: 64px;
+    height: 64px;
     font-size: 1.1rem;
     font-weight: bold;
-    cursor: default;
+    cursor: pointer;
     background-color: #333;
     color: white;
     border: none;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
 }
 
+.numberBtn:hover {
+    background-color: #555;
+}
 .image-row {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     width: 100%;
+    gap: 20px;
+    box-sizing: border-box;
 }
 
 #imageContainer {
-    margin: 20px auto;
+    /* margin: 20px auto; */
+    margin-right: 20px;
+    margin-left: 20px;
     text-align: center;
 }
 
@@ -118,17 +130,16 @@ button.nav-btn,
 
 .image-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     gap: 20px;
     flex-wrap: nowrap;
     width: 100%;
-    padding-left: 120px;
     box-sizing: border-box;
 }
 
 #numberPanel {
-    width: 220px;
+    width: 320px;
     min-width: 220px;
     display: flex;
     flex-direction: column;
@@ -197,15 +208,19 @@ button.nav-btn,
 #modalMessage p { margin: 8px 0; }
 
 .numberBtn {
-    min-width: 64px;
-    min-height: 64px;
+    width: 64px;
+    height: 64px;
     font-size: 1.1rem;
     font-weight: bold;
     color: #212529;
     background-color: #e9ecef;
     border: 1px solid #ced4da;
-    border-radius: 8px;
+    border-radius: 50%;
     cursor: default;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
 }
 
 .numberBtn.selected {
@@ -230,6 +245,35 @@ button.nav-btn,
     display: inline-block;
     
 }
+
+.results-list-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 12px 16px;
+    border-top: 1px solid #e9ecef;
+}
+
+.results-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.result-item {
+    background: #f8f9fa;
+    padding: 8px 12px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 40px;
+    align-items: center;
+}
+
+.result-item .meta { color: #495057; font-size: 0.9rem; }
+
 
 .nav-buttons .nav-btn {
     min-width: 100px;
