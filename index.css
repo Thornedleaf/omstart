@@ -161,6 +161,7 @@ button.nav-btn,
 }
 
 #counterBadge {
+    display: none;
     position: fixed;
     top: 12px;
     right: 12px;
@@ -230,13 +231,13 @@ button.nav-btn,
 }
 
 .numberBtn.selected-green {
-    background-color: #28a745; /* green */
+    background-color: blue;
     color: #ffffff;
     border-color: #1e7e34;
 }
 
 .numberBtn.selected-red {
-    background-color: #dc3545; /* red */
+    background-color: blue; 
     color: #ffffff;
     border-color: #b21f2d;
 }

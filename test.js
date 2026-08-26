@@ -169,8 +169,6 @@ function showImageAt(index) {
 
     imageContainer.innerHTML = `
         <img src="${image.src}" alt="Random test image">
-        <p>Image position ${index + 1} of ${shuffledImages.length}</p>
-        <p>File index: ${image.index + 1} — File number: ${image.number ?? '-'} </p>
     `;
 
     updateNumberPanel(index);
