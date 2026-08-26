@@ -90,6 +90,12 @@ function createRandomNumber() {
     return String(Math.floor(Math.random() * 99) + 1);
 }
 
+function updateProgressIndicator(index) {
+    if (!counterBadge) return;
+    counterBadge.textContent = `${index + 1}/${shuffledImages.length}`;
+    counterBadge.classList.remove('hidden');
+}
+
 function updateNumberPanel(index) {
     if (!numberPanel || !randomBtn1 || !randomBtn2 || !indexBtn) return;
     const image = shuffledImages[index];
@@ -171,6 +177,7 @@ function showImageAt(index) {
         <img src="${image.src}" alt="Random test image">
     `;
 
+    updateProgressIndicator(index);
     updateNumberPanel(index);
 
     const atFirstImage = index <= 0;
@@ -267,7 +274,7 @@ function renderResults() {
         return `${date} ${hh}:${mm}`;
     }
 
-    h.forEach((r) => {
+    h.slice(0, 5).forEach((r) => {
         const li = document.createElement('li');
         li.className = 'result-item';
         const when = formatTimestamp(r.when);
